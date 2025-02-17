@@ -1,25 +1,59 @@
 {
-  "name": "multitool",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "commonjs",
+  "name": "@riq0h/mtt",
+  "version": "0.0.9",
+  "description": "mtt - multitool for file operation",
+  "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
   "bin": {
-    "mt": "./dist/index.js"
+    "mtt": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "require": "./dist/lib.js",
+      "default": "./dist/lib.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "fix": "prettier --write . && eslint --fix .",
+    "lint": "prettier --check . && eslint src/**/*.ts ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cli",
+    "rename",
+    "compress",
+    "image",
+    "resize"
+  ],
+  "author": "Rikuoh Tsujitani",
   "license": "MIT",
-  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riq0h/mtt"
+  },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@types/node": "^22.13.4",
+    "@types/sharp": "^0.31.1",
+    "@typescript-eslint/parser": "^8.24.0",
+    "eslint-config-prettier": "^10.0.1",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "commander": "^13.1.0"
+    "commander": "^13.1.0",
+    "eslint": "^9.20.1",
+    "globals": "^15.15.0",
+    "prettier": "^3.5.1",
+    "sharp": "^0.33.5",
+    "zip-lib": "^1.0.5"
   }
 }
