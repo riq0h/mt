@@ -3,6 +3,13 @@ import { Command } from "commander";
 import { version, description } from "../package.json";
 import { renameFiles, compressFiles, resizeImages } from "./lib";
 
+interface Options {
+  rename?: boolean;
+  compress?: boolean | string[];
+  image?: string[];
+  percentage?: number;
+}
+
 const program = new Command();
 
 program.version(version).description(description);
@@ -18,7 +25,7 @@ program
     "resize image files. File name and -p option are required",
   )
   .option("-p, --percentage <value>", "specify the resize percentage")
-  .action((options) => {
+  .action((options: Options) => {
     try {
       if (options.rename) {
         renameFiles();
@@ -30,7 +37,7 @@ program
             "resize percentage must be specified with the -p option for image resizing.",
           );
         }
-        resizeImages(options.image, Number(options.percentage));
+        resizeImages(options.image, options.percentage);
       } else {
         program.help();
       }

@@ -21,7 +21,7 @@ export async function resizeImages(
     }
 
     const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
-    const validFiles = files.filter((file) =>
+    const validFiles = files.filter((file: string) =>
       imageExtensions.includes(path.extname(file).toLowerCase()),
     );
 

@@ -11,12 +11,12 @@ export interface RenameOperation {
 
 export async function renameFiles(): Promise<void> {
   try {
-    const files = fs
+    const files: string[] = fs
       .readdirSync(process.cwd())
-      .filter((file) => !file.startsWith("."));
-    const fileContent = files.join("\n");
-    const editedContent = await openEditor(fileContent);
-    const newNames = editedContent.trim().split("\n");
+      .filter((file: string) => !file.startsWith("."));
+    const fileContent: string = files.join("\n");
+    const editedContent: string = await openEditor(fileContent);
+    const newNames: string[] = editedContent.trim().split("\n");
 
     if (newNames.length !== files.length) {
       throw new Error(
@@ -24,18 +24,18 @@ export async function renameFiles(): Promise<void> {
       );
     }
 
-    const uniqueNames = new Set(newNames);
+    const uniqueNames: Set<string> = new Set(newNames);
     if (uniqueNames.size !== newNames.length) {
       throw new Error("file names are duplicated. renaming was not performed.");
     }
 
-    if (newNames.some((name) => /[\s　]/.test(name))) {
+    if (newNames.some((name: string) => /[\s　]/.test(name))) {
       throw new Error(
         "file names cannot contain whitespace characters. renaming was not performed.",
       );
     }
 
-    newNames.forEach((name) => {
+    newNames.forEach((name: string) => {
       if (name.includes("/") || name.includes("\\")) {
         throw new Error(
           "file names cannot contain paths. renaming was not performed.",
@@ -43,14 +43,16 @@ export async function renameFiles(): Promise<void> {
       }
     });
 
-    const operations = files.map((oldName, index) => ({
-      oldName,
-      newName: newNames[index],
-      path: path.join(process.cwd(), oldName),
-      newPath: path.join(process.cwd(), newNames[index]),
-    }));
+    const operations: RenameOperation[] = files.map(
+      (oldName: string, index: number) => ({
+        oldName,
+        newName: newNames[index],
+        path: path.join(process.cwd(), oldName),
+        newPath: path.join(process.cwd(), newNames[index]),
+      }),
+    );
 
-    if (!operations.some((op) => op.oldName !== op.newName)) {
+    if (!operations.some((op: RenameOperation) => op.oldName !== op.newName)) {
       console.log("no changes were made. renaming was not performed.");
       return;
     }

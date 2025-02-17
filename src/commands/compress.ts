@@ -12,18 +12,22 @@ export async function compressFiles(targets?: string[]): Promise<void> {
     const currentDir = process.cwd();
     let isCompressed = false;
 
-    const itemsToCompress =
+    const itemsToCompress: string[] =
       !targets || targets.length === 0
         ? fs
             .readdirSync(currentDir)
-            .filter((item) => !item.startsWith(".") && !item.endsWith(".zip"))
+            .filter(
+              (item: string) => !item.startsWith(".") && !item.endsWith(".zip"),
+            )
         : targets;
 
-    const operations: CompressOperation[] = itemsToCompress.map((item) => ({
-      itemPath: item,
-      zipPath: `${item}.zip`,
-      isFile: fs.existsSync(item) ? fs.statSync(item).isFile() : false,
-    }));
+    const operations: CompressOperation[] = itemsToCompress.map(
+      (item: string) => ({
+        itemPath: item,
+        zipPath: `${item}.zip`,
+        isFile: fs.existsSync(item) ? fs.statSync(item).isFile() : false,
+      }),
+    );
 
     for (const op of operations) {
       if (fs.existsSync(op.zipPath)) {
