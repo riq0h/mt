@@ -1,5 +1,5 @@
 {
-  "type": "commonjs",
+  "type": "module",
   "name": "@riq0h/mtt",
   "version": "0.0.10",
   "description": "mtt - multitool for file operation",
